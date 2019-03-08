@@ -32,10 +32,11 @@ def showPatterns():
 #    ret, frame = cap.read()
 #    fgmsk = fgbg.apply(frame)
 #    bgSum = cv2.sumElems(fgmsk)
+#    if bgSum[0] > 10000:
+#       print("Face")
+#    else:
+        #print("No Face")
 #    cv2.imshow('frame',fgmsk)
-#    k = cv2.waitKey(30) & 0xff
-#    if k == 27:
-#        break
 # 
 #cap.release()
 #cv2.destroyAllWindows()
