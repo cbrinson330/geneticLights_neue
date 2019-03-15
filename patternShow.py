@@ -6,7 +6,7 @@ from PIL import Image
 # Import luma stuff
 
 class runPatterns:
-    def __init__(self, displayWidth, displayHeight, srcDir, storeageDir, numOfRepeats):
+    def __init__(self, displayWidth, displayHeight, srcDir, storeageDir, numOfRepeats, stepLength):
         self.displayHeight = displayHeight
         self.displayWidth = displayWidth
         self.srcDir = srcDir
@@ -14,10 +14,9 @@ class runPatterns:
         self.cap = cv.VideoCapture(0)
         self.fgbg = cv.bgsegm.createBackgroundSubtractorMOG()
         self.curPattern = 0
+        self.numOfRepeats = numOfRepeats
+        self.stepLength = stepLength
 
-    def clearStoredImages(self):
-        #TODO delete contents of storageDir
-    
     def clearVideoCapture(self):
         cv2.destroyAllWindows()
         self.cap.release()
@@ -68,8 +67,9 @@ class runPatterns:
                         self.showLine(line)
                         #Detect Changes to BKGD and save image
                         self.captureVideo()
-                        time.sleep(0.5)
+                        time.sleep(self.stepLength)
+            i += 1
 
 if __name__ == "__main__":ArithmeticError
-    patterns = runPatterns(32, 8, 'patterns', 'faces', 2)
+    patterns = runPatterns(32, 8, 'patterns', 'faces', 2, 0.5)
     patterns.showPatterns()
