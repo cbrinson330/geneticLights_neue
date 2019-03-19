@@ -1,4 +1,5 @@
 from random import (choice, random, randint)
+import os
 
 __all__ = ['Chromosome', 'Population']
 
@@ -20,7 +21,7 @@ class Chromosome:
     
     def __init__(self, gene):
         self.gene = gene
-        self.fitness = Chromosome._update_fitness(gene)
+        self.fitness = 0
     
     def mate(self, mate):
         """
@@ -85,10 +86,11 @@ class Population:
     
     _tournamentSize = 3
 
-    def __init__(self, size=1024, crossover=0.8, elitism=0.1, mutation=0.03):
+    def __init__(self, size=1024, crossover=0.8, elitism=0.1, mutation=0.03, patternDir='patterns'):
         self.elitism = elitism
         self.mutation = mutation
         self.crossover = crossover
+        self.patternDir = patternDir
         
         buf = []
         #TODO create chromosomes from patterns file
@@ -96,8 +98,12 @@ class Population:
         self.population = list(sorted(buf, key=lambda x: x.fitness))
 
     def _getPatterns(self):
-        #TODO look at patterns generated
-
+        for filename in os.listdir(self.patternDir):
+            self.curPattern = fileName.split('.')[0]
+            with open(os.path.join(self.directory, filename)) as f:
+                lines = f.readlines()
+                for line in lines:
+                    
 
     def _tournament_selection(self):
         """
@@ -146,18 +152,3 @@ class Population:
 
         #TODO write patterns to file List.
         #self.population = list(sorted(buf[:size], key=lambda x: x.fitness))
-
-if __name__ == "__main__":
-    maxGenerations = 16384
-    #TODO Loop forever
-        #TODO show patterns as many times as needed
-
-        #TODO pop = Population(size=60, crossover=0.8, elitism=0.1, mutation=0.3)
-        #TODO calculate faces seen
-        #TODO order patterns based on number of faces seen
-
-  for i in range(1, maxGenerations + 1):
-    print("Generation %d: %s" % (i, pop.population[0].gene))
-    pop.evolve()
-  else:
-    print("Maximum generations reached without success.")
