@@ -18,18 +18,18 @@ class runPatterns:
         self.numOfRepeats = numOfRepeats
         self.stepLength = stepLength
 
-    def clearVideoCapture(self):
+    def _clearVideoCapture(self):
         cv2.destroyAllWindows()
         self.cap.release()
 
-    def chunks(self, l, n):
+    def _chunks(self, l, n):
         """Yield successive n-sized chunks from l."""
         for i in range(0, len(l), n):
             yield l[i:i + n]
 
-    def showLine(self,pattern):
+    def _showLine(self,pattern):
         leds = pattern.split(",")
-        leds = self.chunks(leds, self.displayWidth)
+        leds = self._chunks(leds, self.displayWidth)
         x = 0
         y = 0
 
@@ -42,7 +42,7 @@ class runPatterns:
                 x += 1
             y += 1
 
-    def captureVideo(self):
+    def _captureVideo(self):
         while(1):
             ret, frame = self.cap.read()
             fgmsk = self.fgbg.apply(frame)
@@ -54,7 +54,7 @@ class runPatterns:
                 print(self.curPattern)
 
     def showPatterns(self):
-        thread.start_new_thread(self.captureVideo,())
+        thread.start_new_thread(self._captureVideo,())
         for i in range (1, int(self.numOfRepeats)):
             for filename in os.listdir(self.srcDir):
                 self.curPattern = filename.split('.')[0]
@@ -63,7 +63,7 @@ class runPatterns:
                     for line in lines:
 
                         #Display the pattern
-                        self.showLine(line)
+                        self._showLine(line)
                         time.sleep(self.stepLength)
             i += 1
 

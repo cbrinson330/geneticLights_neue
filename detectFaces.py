@@ -6,11 +6,11 @@ from PIL import Image
 
 class detectFaces:
 
-    def __init__ (self):
-        self.imgDir = "faces"
+    def __init__ (self, imgDir, numberOfPatterns):
+        self.imgDir = imgDir 
         self.store = {}
         self.initStore()
-        self.numberOfPatterns = 60
+        self.numberOfPatterns = numberOfPatterns
 
 
     def url_to_image(self, url):
