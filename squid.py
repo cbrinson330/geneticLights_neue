@@ -6,6 +6,7 @@ if __name__ == "__main__":
     #Dir paths
     patternStorageDir = 'patterns'
     imgStorageDir = 'faces'
+    patternOrderFile = 'patternRanking.txt'
 
     #Display vars
     displayWidth = 32
@@ -16,14 +17,16 @@ if __name__ == "__main__":
     #Patterns
     numberOfPatterns = 60
 
-    while True:
-        rp = runPatterns(displayWidth, displayHeight, patternStorageDir, imgStorageDir, timesToRepeatAllPatterns, stepLength)
-        rp.showPatterns()
+    #while True:
+    print("starting show patterns")
+    #rp = runPatterns(displayWidth, displayHeight, patternStorageDir, imgStorageDir, timesToRepeatAllPatterns, stepLength)
+    #rp.showPatterns()
+    print("done showing Patterns")
 
-        #TODO calculate faces seen
-        df = detectFaces(imgStorageDir, numberOfPatterns)
-        df.detectFaceForImage()
+    print("starting detect faces")
+    df = detectFaces(imgStorageDir, numberOfPatterns, patternOrderFile, patternStorageDir)
+    df.detectFaceForImage()
+    print("done detecting faces")
 
-        #TODO order patterns based on number of faces seen
-        #TODO pop = Population(size=60, crossover=0.8, elitism=0.1, mutation=0.3)
-        #TODO pop.evolve()
+    #TODO pop = Population(size=60, crossover=0.8, elitism=0.1, mutation=0.3)
+    #TODO pop.evolve()

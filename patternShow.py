@@ -1,6 +1,7 @@
 import os
 import time
 import thread
+import datetime
 import numpy as np
 import cv2 as cv
 from PIL import Image
@@ -49,9 +50,11 @@ class runPatterns:
             bgSum = cv.sumElems(fgmsk)
             if bgSum[0] > 10000:
                 img_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-                fileName = self.storageDir + '/' + self.curPattern + '_' + str(round(time.time() * 1000)) + '.jpg'
+                curTime = datetime.datetime.now()
+                timestamp = "%s%s%s" % (curTime.minute, curTime.second, str(curTime.microsecond))
+                fileName = self.storageDir + '/' + self.curPattern + '_' + timestamp + '.jpg'
                 cv.imwrite(fileName, img_gray)
-                print(self.curPattern)
+                #TODO consider puttin delay in to limit the frame rate
 
     def showPatterns(self):
         thread.start_new_thread(self._captureVideo,())

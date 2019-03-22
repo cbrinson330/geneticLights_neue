@@ -1,56 +1,72 @@
 import os
 import numpy as np
 import urllib
+import operator
 import cv2 as cv
 from PIL import Image
 
 class detectFaces:
 
-    def __init__ (self, imgDir, numberOfPatterns):
+    def __init__ (self, imgDir, numberOfPatterns, patternOrderFile, patternsDir):
         self.imgDir = imgDir 
         self.store = {}
-        self.initStore()
+        self.patternsDir = patternsDir
         self.numberOfPatterns = numberOfPatterns
+        self.patternOrderFile = patternOrderFile
+
+        self._initStore()
 
 
-    def url_to_image(self, url):
+    def _urlToImage(self, url):
 	    resp = urllib.urlopen(url)
 	    image = np.asarray(bytearray(resp.read()), dtype="uint8")
-	    image = cv2.imdecode(image, cv2.IMREAD_GRAYSCALE)
+	    image = cv.imdecode(image, cv.IMREAD_GRAYSCALE)
 	    return image
 
-    def initStore(self):
-        patternCount = len([name for name in os.listdir('patterns') if os.path.isfile(name)])
+    def _initStore(self):
+        path, dirs, files = next(os.walk(self.patternsDir))
+        patternCount = len(files)
         i = 0
+        print(patternCount)
         while i < patternCount:
-            self.store[i] = 0
+            self.store[str(i)] = 0
             i+=1
-    
-    def getCounts(self):
-        return self.store
 
+    def _outputPatternOrder(self):
+        sortedPatterns = sorted(self.store.items(), key=operator.itemgetter(1))
+
+        fileName = self.patternOrderFile
+        f = open(fileName, "w")
+
+        for patternId in sortedPatterns:
+            line = str(patternId) + '\n'
+            f.write(line)
+        
+        f.close()
+    
     def detectFaceForImage(self):
-        for filename in oslistdir(self.imgDir)
-            fileNamePt = fileName.split('.')
-            patternId = fileNamePt.split('_')[0]
+        print(self.store)
+        for fileName in os.listdir( self.imgDir ):
+            fileNamePt = fileName.split('_')
+            patternId = fileNamePt[0]
+            faceCascade = cv.CascadeClassifier('cascade/haarcascade_frontalface_default.xml')
             
-            imgUrl = self.imgDir + '/' + filename
-            img = self.url_to_image(imgUrl)
+            imgUrl = self.imgDir + '/' + fileName
+            img = self._urlToImage(imgUrl)
 
             faces = faceCascade.detectMultiScale(
                 img,
                 scaleFactor=1.1,
                 minNeighbors=5, 
-                minSize=(30, 30),
-                flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+                minSize=(30, 30)
             )
 
-            len(faces)
-            self.store[patternId] += len(faces)
+            self.store[str(patternId)] += len(faces)
 
             #Delete file
-            os.remove(imgUrl)
+            #os.remove(imgUrl)
         
+        self._outputPatternOrder()
 
 if __name__ == "__main__":
     df = detectFaces()
