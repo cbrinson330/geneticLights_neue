@@ -27,25 +27,24 @@ class detectFaces:
         path, dirs, files = next(os.walk(self.patternsDir))
         patternCount = len(files)
         i = 0
-        print(patternCount)
         while i < patternCount:
             self.store[str(i)] = 0
             i+=1
 
     def _outputPatternOrder(self):
         sortedPatterns = sorted(self.store.items(), key=operator.itemgetter(1))
+        sortedPatterns = reversed(sortedPatterns)
 
         fileName = self.patternOrderFile
         f = open(fileName, "w")
 
-        for patternId in sortedPatterns:
-            line = str(patternId) + '\n'
+        for key,value in sortedPatterns:
+            line = str(key) + '\n'
             f.write(line)
         
         f.close()
     
     def detectFaceForImage(self):
-        print(self.store)
         for fileName in os.listdir( self.imgDir ):
             fileNamePt = fileName.split('_')
             patternId = fileNamePt[0]

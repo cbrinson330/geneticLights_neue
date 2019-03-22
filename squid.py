@@ -1,6 +1,6 @@
 from patternShow import runPatterns
 from detectFaces import detectFaces
-#import population
+import evolve
 
 if __name__ == "__main__":
     #Dir paths

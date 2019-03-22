@@ -103,6 +103,7 @@ class Population:
             with open(os.path.join(self.directory, filename)) as f:
                 lines = f.readlines()
                 for line in lines:
+                    print('foo')
                     
 
     def _tournament_selection(self):
@@ -133,7 +134,7 @@ class Population:
         idx = int(round(size * self.elitism))
         buf = self.population[:idx]
         
-        while (idx < size)
+        while (idx < size):
             if random() <= self.crossover:
                 (p1, p2) = self._selectParents()
                 children = p1.mate(p2)
