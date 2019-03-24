@@ -63,7 +63,7 @@ class detectFaces:
             self.store[str(patternId)] += len(faces)
 
             #Delete file
-            #os.remove(imgUrl)
+            os.remove(imgUrl)
         
         self._outputPatternOrder()
 

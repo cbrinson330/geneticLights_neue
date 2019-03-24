@@ -1,2 +1,6 @@
 *.pyc
 __pycache__
+faces
+facesBAK
+patterns
+patternRanking.txt
