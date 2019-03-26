@@ -1,14 +1,14 @@
 from patternShow import runPatterns
 from detectFaces import detectFaces
-import evolve
+from evolve import Population
 
 if __name__ == "__main__":
-    #Dir paths
+    #Paths
     patternStorageDir = 'patterns'
     imgStorageDir = 'faces'
     patternOrderFile = 'patternRanking.txt'
 
-    #Display vars
+    #Display
     displayWidth = 32
     displayHeight = 9
     timesToRepeatAllPatterns = 2
@@ -16,17 +16,24 @@ if __name__ == "__main__":
 
     #Patterns
     numberOfPatterns = 60
+    stepTime = 0.5 #Length (secs) to play for pattern
+    playTime = 10 #Length (secs) pattern should last
+    numberOfLeds = displayHeight * displayWidth
+    numberOfSteps = playTime / stepTime
+
 
     #while True:
-    print("starting show patterns")
+    print("Starting show patterns")
     #rp = runPatterns(displayWidth, displayHeight, patternStorageDir, imgStorageDir, timesToRepeatAllPatterns, stepLength)
     #rp.showPatterns()
-    print("done showing Patterns")
+    print("Finished showing Patterns")
 
-    print("starting detect faces")
-    df = detectFaces(imgStorageDir, numberOfPatterns, patternOrderFile, patternStorageDir)
-    df.detectFaceForImage()
-    print("done detecting faces")
+    print("Starting detect faces")
+    #df = detectFaces(imgStorageDir, numberOfPatterns, patternOrderFile, patternStorageDir)
+    #df.detectFaceForImage()
+    print("Finished detecting faces")
 
-    #TODO pop = Population(size=60, crossover=0.8, elitism=0.1, mutation=0.3)
-    #TODO pop.evolve()
+    print("Starting Evolve")
+    pop = Population(patternOrderFile, 60, 0.8, 0.1, 0.3, patternStorageDir)
+    pop.evolve()
+    print("Finished Evolving")
