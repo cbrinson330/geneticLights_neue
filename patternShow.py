@@ -1,6 +1,6 @@
 import os
 import time
-import thread
+import _thread
 import datetime
 import numpy as np
 import cv2 as cv
@@ -12,8 +12,6 @@ from luma.core.virtual import viewport
 from luma.core.legacy import text, show_message
 from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT, LCD_FONT
 from luma.core.render import canvas
-
-Import luma stuff
 
 class runPatterns:
     def __init__(self, displayWidth, displayHeight, srcDir, storageDir, numOfRepeats, stepLength):
@@ -46,7 +44,7 @@ class runPatterns:
             for ledRow in leds:
                 for led in ledRow:
                     if(int(led) == 1):
-                        draw.point((x,y), fill white)
+                        draw.point((x,y), fill="white")
                     x += 1
                 y += 1
 
@@ -64,7 +62,7 @@ class runPatterns:
                 time.sleep(self.stepLength/4)
 
     def showPatterns(self):
-        thread.start_new_thread(self._captureVideo,())
+        _thread.start_new_thread(self._captureVideo,())
         for i in range (1, int(self.numOfRepeats)):
             for filename in os.listdir(self.srcDir):
                 self.curPattern = filename.split('.')[0]
