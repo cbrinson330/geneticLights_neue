@@ -13,8 +13,6 @@ from luma.core.legacy import text, show_message
 from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT, LCD_FONT
 from luma.core.render import canvas
 
-Import luma stuff
-
 class runPatterns:
     def __init__(self, displayWidth, displayHeight, srcDir, storageDir, numOfRepeats, stepLength):
         self.displayHeight = displayHeight
@@ -26,6 +24,8 @@ class runPatterns:
         self.curPattern = 0
         self.numOfRepeats = numOfRepeats
         self.stepLength = stepLength
+        self.serial = spi(port=0, device=0, gpio=noop())
+        self.device = max7219(self.serial, cascaded=4, block_orientation=90, rotate=0)
 
     def _clearVideoCapture(self):
         cv2.destroyAllWindows()
@@ -42,7 +42,7 @@ class runPatterns:
         x = 0
         y = 0
 
-        with canvas(device) as draw:
+        with canvas(self.device) as draw:
             for ledRow in leds:
                 for led in ledRow:
                     if(int(led) == 1):
