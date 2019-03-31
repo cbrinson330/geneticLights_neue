@@ -1,6 +1,6 @@
 import os
 import time
-import thread
+import _thread
 import datetime
 import numpy as np
 import cv2 as cv
@@ -46,7 +46,7 @@ class runPatterns:
             for ledRow in leds:
                 for led in ledRow:
                     if(int(led) == 1):
-                        draw.point((x,y), fill white)
+                        draw.point((x,y), fill="white")
                     x += 1
                 y += 1
 
@@ -64,7 +64,7 @@ class runPatterns:
                 time.sleep(self.stepLength/4)
 
     def showPatterns(self):
-        thread.start_new_thread(self._captureVideo,())
+        _thread.start_new_thread(self._captureVideo,())
         for i in range (1, int(self.numOfRepeats)):
             for filename in os.listdir(self.srcDir):
                 self.curPattern = filename.split('.')[0]
