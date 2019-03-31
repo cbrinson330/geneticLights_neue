@@ -5,7 +5,15 @@ import datetime
 import numpy as np
 import cv2 as cv
 from PIL import Image
-# Import luma stuff
+from luma.led_matrix.device import max7219
+from luma.core.interface.serial import spi, noop
+from luma.core.render import canvas
+from luma.core.virtual import viewport
+from luma.core.legacy import text, show_message
+from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT, LCD_FONT
+from luma.core.render import canvas
+
+Import luma stuff
 
 class runPatterns:
     def __init__(self, displayWidth, displayHeight, srcDir, storageDir, numOfRepeats, stepLength):
@@ -24,7 +32,7 @@ class runPatterns:
         self.cap.release()
 
     def _chunks(self, l, n):
-        """Yield successive n-sized chunks from l."""
+        #Yield successive n-sized chunks from l.
         for i in range(0, len(l), n):
             yield l[i:i + n]
 
@@ -34,14 +42,13 @@ class runPatterns:
         x = 0
         y = 0
 
-        #with canvas(device) as draw:
-        for ledRow in leds:
-            for led in ledRow:
-                if(int(led) == 1):
-                    foo = int(led)
-                    #draw.point((x,y), fill white)
-                x += 1
-            y += 1
+        with canvas(device) as draw:
+            for ledRow in leds:
+                for led in ledRow:
+                    if(int(led) == 1):
+                        draw.point((x,y), fill white)
+                    x += 1
+                y += 1
 
     def _captureVideo(self):
         while(1):
@@ -54,7 +61,7 @@ class runPatterns:
                 timestamp = "%s%s%s" % (curTime.minute, curTime.second, str(curTime.microsecond))
                 fileName = self.storageDir + '/' + self.curPattern + '_' + timestamp + '.jpg'
                 cv.imwrite(fileName, img_gray)
-                #TODO consider puttin delay in to limit the frame rate
+                time.sleep(self.stepLength/4)
 
     def showPatterns(self):
         thread.start_new_thread(self._captureVideo,())
@@ -64,7 +71,6 @@ class runPatterns:
                 with open(os.path.join(self.srcDir, filename)) as f:
                     lines = f.readlines()
                     for line in lines:
-
                         #Display the pattern
                         self._showLine(line)
                         time.sleep(self.stepLength)
