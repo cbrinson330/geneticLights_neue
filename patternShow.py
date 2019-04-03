@@ -38,12 +38,12 @@ class runPatterns:
 
     def _showLine(self,pattern):
         leds = pattern.split(",")
-        leds = self._chunks(leds, self.displayWidth)
-        x = 0
+        leds = list(self._chunks(leds, self.displayWidth))
         y = 0
 
         with canvas(self.device) as draw:
             for ledRow in leds:
+                x = 0
                 for led in ledRow:
                     if(int(led) == 1):
                         draw.point((x,y), fill="white")
