@@ -28,7 +28,7 @@ class runPatterns:
         self.device = max7219(self.serial, cascaded=4, block_orientation=90, rotate=0)
 
     def _clearVideoCapture(self):
-        cv2.destroyAllWindows()
+        cv.destroyAllWindows()
         self.cap.release()
 
     def _chunks(self, l, n):
