@@ -75,6 +75,7 @@ class runPatterns:
                         self._showLine(line)
                         time.sleep(self.stepLength)
             i += 1
+        self._clearVideoCapture()
 
 if __name__ == "__main__":
     patterns = runPatterns(32, 8, 'patterns', 'faces', 2, 0.5)
