@@ -1,6 +1,7 @@
 import os
 import numpy as np
-import urllib
+import urllib.request
+import requests
 import operator
 import cv2 as cv
 from PIL import Image
@@ -16,12 +17,10 @@ class detectFaces:
 
         self._initStore()
 
-
     def _urlToImage(self, url):
-	    resp = urllib.urlopen(url)
-	    image = np.asarray(bytearray(resp.read()), dtype="uint8")
-	    image = cv.imdecode(image, cv.IMREAD_GRAYSCALE)
-	    return image
+        image = cv.imread(url,0)
+        image = cv.imdecode(image, cv.IMREAD_GRAYSCALE)
+        return image
 
     def _initStore(self):
         path, dirs, files = next(os.walk(self.patternsDir))

@@ -24,7 +24,7 @@ class Chromosome:
             totalLEDS += len(list(i))
         
         percent = totalLEDS/100
-        tenPercent = percent*10
+        tenPercent = int(percent*10)
 
         for i in range(tenPercent):
             step = randint(0, len(gene) - 1)

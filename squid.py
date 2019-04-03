@@ -1,7 +1,7 @@
 from patternShow import runPatterns
 from detectFaces import detectFaces
 from evolve import Population
-from patterngen import patternGen
+from patterngen import patternGen 
 import os
 
 if __name__ == "__main__":
